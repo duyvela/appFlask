@@ -1,0 +1,99 @@
+{% extends './body.html' %}
+
+{% block title %}
+Usuarios
+{% endblock %}
+
+
+{% block container %}
+
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Usuario</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('MoneidAPP.dashboard') }}">Inicio</a></li>
+                <li class="breadcrumb-item">Usuarios</li>
+            </ol>
+        </nav>
+        
+    </div><!--END PAGE TITLE--><br>
+
+    <section class="section principal">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!--table-->
+                <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Usuarios</h5>
+        
+                      <!-- Default Tabs -->
+                      <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
+                        <li class="nav-item flex-fill" role="presentation">
+                            <a href="{{ url_for('MoneidAPP.Users') }}" class="nav-link w-100 active" id="btnUsers" data-bs-toggle="tab" data-bs-target="#userLists" type="button" role="tab" aria-controls="home" aria-selected="true">Lista de Usuarios</a>
+                            
+                        </li>
+                        <li class="nav-item flex-fill" role="presentation">
+                            <a href="{{ url_for('MoneidAPP.addUser') }}"  class="nav-link w-100" id="btnAddUser" type="button" role="tab" aria-selected="false">Nuevo Usuarios</a>    
+                          
+                        </li>
+                      </ul>
+                      <div class="tab-content pt-2" id="myTabjustifiedContent">
+                        <div class="tab-pane fade show active" id="userLists" role="tabpanel" aria-labelledby="btnUsers">
+                            <table class="table table-bordered">
+
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Correo</th>
+                                        <th scope="col">estado</th>
+                                        <th scope="col">Sucursal</th>
+                                        <th scope="col">Puesto</th>
+                                        <th scope="col">Tipo de usuario</th>
+                                        <th scope="col">Editar</th>
+                                        <th scope="col">Eliminar</th>
+                                    </tr>
+                                </thead>
+    
+                                <tbody>
+                                    {% for user in listaUsers %}
+                                    <tr>
+                                        <td>{{user.username}} {{user.apellidoPAtEmpleado}}</td>
+        
+                                        <td>{{user.correoElectronico}}</td>
+                                        <td>{{user.estadoEmpleado}}</td>
+                                        <td>{{ sucursal_dict[user.idSucursalesEmpleado] }}</td>
+                                        <td>{{user.puesto}}</td>
+                                        <td>{{ roles_dict[user.idRolEmpleado] }}</td>
+                                        <td><a href="{{url_for('MoneidAPP.editUser', user_id=user.id)}}" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i></a></td>
+                                        <!--<td><button class="btn btn-primary btn-sm" id="btn-edit{{user.id}}" data-bs-toggle="modal" data-bs-target="#modal{{user.id}}">Edit</button></td> -->
+                                        <td><a href="{{url_for('MoneidAPP.deleteUser', id=user.id)}}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a></td>
+                                    </tr> 
+                                        {% endfor %}
+    
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
+                    
+
+                      </div>
+                      
+                      <!-- End Default Tabs -->
+        
+                    </div>
+                  </div>
+                  <!--endtabs-->
+
+
+
+            </div>
+    </section>
+</main>
+
+
+{% endblock %}
+

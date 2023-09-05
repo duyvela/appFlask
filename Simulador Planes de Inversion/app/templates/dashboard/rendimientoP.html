@@ -1,0 +1,126 @@
+{% extends './body.html' %}
+
+{% block title %}
+Rendimiento Programado
+{% endblock %}
+
+
+{% block container %}
+
+
+<main id="main" class="main">
+    <div class="pagetitle">
+      <h1>RENDIMIENTOS PROGRAMADOS</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('MoneidAPP.index') }} ">Inicio</a></li>
+          <li class="breadcrumb-item">Rendimientos Programados</li>
+        </ol>
+      </nav>
+    </div><!--END PAGE TITLE--><br><br><br><br><br><br>
+
+    <section class="section principal">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+
+          <!--table-->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-center">Rendimiento Programados</h5>
+
+              <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
+                <li class="nav-item flex-fill" role="presentation">
+                  <a href="{{ url_for('MoneidAPP.rendimientoPro') }}" class="nav-link w-100 active" id="btnRENPRO" data-bs-toggle="tab" data-bs-target="#RENPRO" type="button" role="tab" aria-controls="home" aria-selected="true">Calcular Rendimiento Programado</a>
+                </li>
+                <li class="nav-item flex-fill" role="presentation">
+                  <a href="{{ url_for('MoneidAPP.registrosRenPro') }}" class="nav-link w-100" id="btnResgitroRENPRO" type="button" role="tab" aria-selected="false">Registros</a>
+                </li>
+              </ul>
+              <div class="tab-content pt-2" id="myTabjustifiedContent">
+                <div class="tab-pane fade show active" id="CALpf" role="tabpanel" aria-labelledby="btnRENPRO"></div>
+              </div>
+
+
+
+              <!--                           FORMULARIO                                         -->
+              <form method="POST" action="{{ url_for('MoneidAPP.rendimientoPro') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <div class="row g-3 justify-content-center">
+                <div class="col-md-2">
+                  <label class="col-form-label" for="inversion" name="inversion" >Monto Inicial:</label>
+                  <input class="form-control" type="number" id="inversion" name="inversion"/>
+                  </div>
+                  <div class="col-md-2">
+                    <label for="nombreCliente" class="col-form-label">Nombre Cliente:</label>
+                    <input type="text" class="form-control" id="clientName" name="clientName"/>
+                  </div>
+                  <div class="col-md-2">
+                    <label for="telefonoCliente" class="col-form-label">Telefono:</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono">
+                  </div>
+                  <div class="col-md-2 text-center">
+                  <button id="calculateButton" class="custom-button" onclick="showConfirmation()">Calcular</button>
+                  <input type="hidden" name="submit_type" id="submit_type" value="calculate_and_register">
+                  </div>
+                  <script>
+                    function showConfirmation(event) {
+                      if (!confirm('Deseas registrar el cálculo en la base de datos?')) {
+                        document.getElementById('submit_type').value = '';
+                      }
+                    }
+                  </script>
+                </form>
+                
+
+                </div>
+                </div>
+
+                {% if resultado %}
+                <div class="row justify-content-center">
+
+                <div class="col-md-11">
+                <table class="table table-bordered">
+                  <tr class="rendimientoProw1">
+                    <th colspan="6" style="text-align: center;" >Rendimiento Programado</th>
+                  </tr>
+                  <tr class="rendimientoProw2">
+                    <th>Monto Invertido: {{ resultado['montoInicial'] }}</th>
+                    <th>Mensual (1.69%)</th>
+                    <th>Otras Instituciones</th>
+                    <th>Inversion Plazo Fijo</th>
+                    <th>Ganancia Anual </th>
+                    <th>Diferencia</th>
+                  </tr>
+                  <tr>
+                    <td>Rendimiento Programado mensual</td>
+                   
+                    <td id="gananciaMensual">{{ resultado['gananciaMensual'] }}</td>
+                    <td>{{ resultado['OInstiRP'] }}</td>
+                    <td id="inversionPlazoFijo">{{ resultado['inversionPlazoFijo'] }}</td>
+                    <td rowspan="2">{{ resultado['gananciaAnual'] }}</td>
+                    <td id="diferencia" rowspan="2">{{ resultado['diferencia'] }}</td>
+                    
+                  </tr>
+                  <tr>
+                    <td>Total</td>
+                    <td id="gananciaAnual">{{ resultado['totalRendimientoProgramado'] }}</td> 
+                    <td>{{ resultado['totalInsti']}}</td>
+                    <td>{{ resultado['totalPlazoFijo'] }}</td>                                              
+                  </tr> 
+                </table>
+                <img height="750px" width="1100px" src="data:image/png;base64, {{grafica_base64rp}}" alt="Grafica Rendimiento Programado">
+              </div>
+            </div>
+           
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+
+
+{% endblock %}
+

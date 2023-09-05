@@ -1,0 +1,21 @@
+
+th, td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+body, html {
+    height: 100%;
+}
+
+body{
+    background: rgba(66, 61, 66, 1.0);
+    background: -webkit-linear-gradient(top left, rgb(186, 219, 225), rgb(125, 159, 184));
+    background: -moz-linear-gradient(top left, rgb(186, 219, 225), rgb(125, 159, 184));
+    background: linear-gradient(to bottom right, rgb(186, 219, 225), rgb(125, 159, 184));
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    justify-content: center;
+    align-items: center;
+}

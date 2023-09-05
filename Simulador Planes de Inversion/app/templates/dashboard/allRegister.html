@@ -1,0 +1,165 @@
+{% extends './body.html' %}
+
+{% block title %}
+Registros
+{% endblock %}
+
+
+{% block container %}
+
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>REGISTROS</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('MoneidAPP.index') }}">Inicio</a></li>
+                <li class="breadcrumb-item">Registros Corridas Financieras</li>
+            </ol>
+        </nav>
+    </div><!--END PAGE TITLE--><br><br><br>
+
+    <section class="section principal">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+
+                <!--table-->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Registros</h5>
+
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#plazofijo">Plazo
+                                    Fijo</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#rendimiento">Rendimientos
+                                    Programados</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab"
+                                    data-bs-target="#aportacion">Aportaciones</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content pt-2">
+
+                            <!--REGISTROS PLAZO FIJO-->
+                            <div class="tab-pane fade show active plazofijo" id="plazofijo">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Colaborador</th>
+                                            <th scope="col">Sucursal</th>
+                                            <th scope="col">Cliente</th>
+                                            <th scope="col">Contacto</th>
+                                            <th scope="col">Monto</th>
+                                            <th scope="col" style="text-align: center;">PDF</th>
+                                            <th scope="col" style="text-align: center;">Borrar</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {% for list1 in listaRegistroPF %}
+                                        <tr>
+                                            <th>{{list1.fechaRegistro}}</th>
+                                            <th>{{empleado_dict[list1.idEmpleado]}}</th>
+                                            <th>{{sucursalEmpleado[list1.idEmpleado]}}</th>
+                                            <th>{{list1.nombreCliente}}</th>
+                                            <th>{{list1.telefono}}</th>
+                                            <th>{{list1.montoinicial}}</th>
+                                            <!-- <th>{{list1.graficas}}</th> -->
+                                            <th style="text-align: center;"><a href="{{ url_for('MoneidAPP.pdfPlazoFijo', idPlazoFijo=list1.idPlazoFijo) }}" class="btn btn-primary btn-sm"><i class="bi bi-file-pdf-fill"></i></a></th>
+                                            <th style="text-align: center;"><a href="{{ url_for('MoneidAPP.deleteRegistroPF', idPlazoFijo=list1.idPlazoFijo) }}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a></th>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--end registros plazo fijo-->
+                            <!--REGISTROS RENDIMIENTOS PROGRAMADOS-->
+                            <div class="tab-pane fade rendimiento pt-3" id="rendimiento">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Colaborador</th>
+                                            <th scope="col">Sucursal</th>
+                                            <th scope="col">Cliente</th>
+                                            <th scope="col">Contacto</th>
+                                            <th scope="col">Monto</th>
+                                            <th scope="col" style="text-align: center;">PDF</th>
+                                            <th scope="col" style="text-align: center;">Borrar</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {% for list1 in listaRegistroRENPRO %}
+                                        <tr>
+                                            <th>{{list1.fechaRegistro}}</th>
+                                            <th>{{empleado_dict[list1.idEmpleado]}}</th>
+                                            <th>{{sucursalEmpleado[list1.idEmpleado]}}</th>
+                                            <th>{{list1.nombreCliente}}</th>
+                                            <th>{{list1.telefono}}</th>
+                                            <th>{{list1.montoInicial}}</th>
+                                            <th><a href="{{ url_for('MoneidAPP.pdfRenPro', idRendimientoP=list1.idRendimientoP) }}"
+                                                    class="btn btn-primary btn-sm"><i class="bi bi-file-pdf"></i></a>
+                                            </th>
+                                            <th><a href="{{ url_for('MoneidAPP.deleteRegistroRENPRO', idRendimientoP=list1.idRendimientoP) }}"
+                                                    class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a></th>
+                                        </tr>
+
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--END RENDIMIENTOS-->
+                            <!--REGISTROS APORTACION -->
+                            <div class="tab-pane fade pt-3" id="aportacion">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Colaborador</th>
+                                            <th scope="col">Sucursal</th>
+                                            <th scope="col">Cliente</th>
+                                            <th scope="col">Contacto</th>
+                                            <th scope="col">Monto</th>
+                                            <th scope="col" style="text-align: center;">PDF</th>
+                                            <th scope="col" style="text-align: center;">Borrar</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {% for list1 in listaRegistroAPOR %}
+                                        <tr>
+                                            <th>{{list1.fechaRegistro}}</th>
+                                            <th>{{empleado_dict[list1.idEmpleado]}}</th>
+                                            <th>{{sucursalEmpleado[list1.idEmpleado]}}</th>
+                                            <th>{{list1.nombreCliente}}</th>
+                                            <th>{{list1.telefono}}</th>
+                                            <th>{{list1.montoInicial}}</th>
+                                            <th><a href="{{ url_for('MoneidAPP.pdfAPOR', idAportacion=list1.idAportacion) }}"
+                                                    class="btn btn-primary btn-sm"><i class="bi bi-file-pdf"></i></a>
+                                            </th>
+                                            <th><a href="{{ url_for('MoneidAPP.deleteRegistroAPOR', idAportacion=list1.idAportacion) }}"
+                                                    class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a></th>
+                                        </tr>
+
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--END REGISTRO APORTACION-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+{% endblock %}

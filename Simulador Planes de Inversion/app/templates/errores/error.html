@@ -1,0 +1,15 @@
+{% extends './body.html' %}
+
+{% block title %}Error 401{% endblock %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/error.css')}}">
+{% endblock %}
+
+{% block container %}
+<div class="row">
+    <div style="text-align: center;">
+        <img src="{{ url_for('static', filename='img/401.png')}}" alt="">
+    </div>
+</div>
+{% endblock %}

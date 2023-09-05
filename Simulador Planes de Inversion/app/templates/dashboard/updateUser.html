@@ -1,0 +1,162 @@
+{% extends "./body.html" %}
+
+{% block title %}
+Agregar usuarios
+{% endblock %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/boxicons/css/boxicons.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/quill/quill.snow.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/quill/quill.bubble.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/remixicon/remixicon.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/simple-datatables/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+{% endblock %}
+
+{% block container %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong style="font-size: 14px;">{{ message }}</strong>
+    <button type="button" class="close" data-dimiss="alert" aria-label="close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Agregar Usuarios</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('MoneidAPP.index') }}">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('MoneidAPP.Users') }}">Usuarios</a></li>
+                <li class="breadcrumb-item">Agregar usuarios</li>
+            </ol>
+        </nav>
+    </div><!--END PAGE TITLE--><br>
+
+    <section class="section principal">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+
+                <!--table-->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Editar Usuario</h5>
+
+                        <form class="form-signup" method="POST" action="{{ url_for('MoneidAPP.editUser', user_id=user_to_edit.id)}}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <div class="form-group text-center pt-3">
+                                
+                            </div>
+                                <div class="col-12 col-sm-6 py-2 wow fadeInLeft">
+                                    <label for="username">Nombre del usuario</label>
+                                    <input value="{{ user_to_edit.username }}" type="text" name="username" id="username" class="form-control" placeholder="Nombre(s)" minlength="3" maxlength="20" required>
+                                </div>
+                                <div class="col-12 col-sm-6 py-2 wow fadeInLeft">
+                                    <label for="apellidoPAtEmpleado">Apellido Paterno</label>
+                                    <input value="{{ user_to_edit.apellidoPAtEmpleado }}" type="text" name="apellidoPAtEmpleado" id="apellidoPAtEmpleado" class="form-control" placeholder="Apellido Paterno" minlength="3" maxlength="25" required>
+                                </div>
+                                <div class="col-12 col-sm-6 py-2 wow fadeInLeft">
+                                    <label for="apellidoMatEmpleado">Apellido Materno</label>
+                                    <input value="{{ user_to_edit.apellidoMatEmpleado }}" type="text" name="apellidoMatEmpleado" id="apellidoMatEmpleado" class="form-control" placeholder="Apellido Materno" minlength="3" maxlength="25" required>
+                                </div>
+            
+                                <div class="col-12 col-sm-6 py-2 wow fadeInLeft">
+                                    <label for="correoElectronico">Correo Electrónico</label>
+                                    <input value="{{ user_to_edit.correoElectronico }}" type="email" name="correoElectronico" id="correoElectronico" class="form-control" placeholder="Ingrese el correo electrónico" minlength="6" maxlength="150" required>
+                                </div>
+                                
+                                <div class="col-12 col-sm-6 py-2 wow fadeInLeft">
+                                    <label for="password">Contraseña</label>
+                                    <input type="password" name="password" id="password" class="form-control" placeholder="Ingrese la contraseña" value="user_to_edit.password" minlength="6" maxlength="255" required>
+                                </div>
+                                <div class="col-12 col-sm-6 py-2 wow fadeInLeft form-group">
+                                    <label for="puesto">Puesto</label>
+                                    <input value="{{ user_to_edit.puesto }}" type="text" name="puesto" id="puesto" class="form-control" placeholder="Ingrese el puesto del empleado" required>
+                                </div>
+                                <div class="col-12 col-sm-6 py-2 wow fadeInLeft">
+                                    <label for="idSucursalEmpleado">Elije la Sucursal a la que Pertenece</label>
+                                    <select name="idSucursalEmpleado" id="idSucursalEmpleado" class="form-select">
+                                        {% for list1 in sucursa %}
+                                        <option value="{{ list1.id }}" {% if list1.id == user_to_edit.idSucursalesEmpleado %} selected {% endif %}>
+                                            {{ list1.nombreSucursal }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-12 col-sm-6 py-2 wow fadeInLeft">
+                                    <label for="tipoRol">Elije el Rol Asignado</label>
+                                    <select name="tipoRol" id="tipoRol" class="form-select">
+                                        {% for list2 in roles %}
+                                        <option value="{{ list2.idRol }}" {% if list2.idRol == user_to_edit.idRolEmpleado %} selected {% endif %}>
+                                            {{ list2.tipoRol }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+            
+                            
+                            <div class="form-group mx-sm-4 pb-2">
+                                <button class="btn btn-primary mt-3 wow zoomIn" type="submit">Actulizar</button>
+                            </div>
+            
+            
+                            
+                            {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                            <br/>
+                            {% for message in messages %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong style='font-size: 14px;'>{{ message }}</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+                        </form>
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </section>
+</main>
+
+
+{% endblock %}
+
+{% block customJS %}
+<script src="{{ url_for('static', filename='vendor/apexcharts/apexcharts.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/chart.js/chart.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/chart.js/chart.umd.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/echarts/echarts.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/quill/quill.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/simple-datatables/simple-datatables.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/tinymce/tinymce.min.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+{% endblock %}

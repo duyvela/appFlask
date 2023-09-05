@@ -1,0 +1,126 @@
+{% extends './body.html' %}
+
+{% block title %}
+Aportacion
+{% endblock %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/boxicons/css/boxicons.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/quill/quill.snow.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/quill/quill.bubble.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/remixicon/remixicon.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/simple-datatables/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+{% endblock %}
+
+{% block container %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong style="font-size: 14px;">{{ message }}</strong>
+    <button type="button" class="close" data-dimiss="alert" aria-label="close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+<main id="main" class="main">
+    <div class="pagetitle">
+      <h1>APORTACIONES</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('MoneidAPP.index') }}">Inicio</a></li>
+          <li class="breadcrumb-item">Aportaciones</li>
+        </ol>
+      </nav>
+    </div><!--END PAGE TITLE--><br><br><br>
+
+    <section class="section principal">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+
+          <!--table-->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-center">Aportacion</h5>
+
+              <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
+                <li class="nav-item flex-fill" role="presentation">
+                  <a href="{{ url_for('MoneidAPP.aportacion') }}" class="nav-link w-100" id="btnAPOR" type="button" role="tab" aria-selected="false">Calcular Aportacion</a>
+                </li>
+                <li class="nav-item flex-fill" role="presentation">
+                  <a href="{{ url_for('MoneidAPP.registrosAPOR') }}" class="nav-link w-100 active" id="btnResgitroAPOR" data-bs-target="#RegistroAPOR" type="button" role="tab" aria-controls="profile" aria-selected="false" >Registros</a>
+                </li>
+              </ul>
+              <div class="tab-content pt-2" id="myTabjustifiedContent">
+                <div class="tab-pane fade show active" id="RegistroAPOR" role="tabpanel" aria-labelledby="btnRegistroAPOR"></div>
+              </div>
+
+              <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Colaborador</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Contacto</th>
+                        <th scope="col">Monto</th>
+                        <th scope="col" style="text-align: center;">PDF</th>
+                        <th scope="col" style="text-align: center;">Borrar</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for list1 in listaRegistroAPOR %}
+                    <tr>
+                        <th>{{list1.fechaRegistro}}</th>
+                        <th>{{empleado_dict[list1.idEmpleado]}}</th>
+                        <th>{{list1.nombreCliente}}</th>
+                        <th>{{list1.telefono}}</th>
+                        <th>{{list1.montoInicial}}</th>
+                        <th><a href="{{ url_for('MoneidAPP.pdfAPOR', idAportacion=list1.idAportacion) }}" class="btn btn-primary btn-sm"><i class="bi bi-file-pdf"></i></a></th>
+                        <th><a href="{{ url_for('MoneidAPP.deleteRegistroAPOR', idAportacion=list1.idAportacion) }}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a></th>
+                    </tr>
+                    
+                    {% endfor %}
+                </tbody>
+              </table>
+
+            
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+{% endblock %}
+
+{% block customJS %}
+<script src="{{ url_for('static', filename='vendor/apexcharts/apexcharts.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/chart.js/chart.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/chart.js/chart.umd.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/echarts/echarts.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/quill/quill.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/simple-datatables/simple-datatables.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/tinymce/tinymce.min.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+{% endblock %}

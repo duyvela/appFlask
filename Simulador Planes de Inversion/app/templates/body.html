@@ -1,0 +1,22 @@
+{% extends './base.html' %}
+
+{% block body %}
+{% include './nav.html' %}
+<div> 
+    {% block container %}
+    {% with messages = get_flaseh_messages() %}
+    {% if messages %}
+    <br/><br/>
+    {% for message in messages %}
+    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-1"></i>
+        <strong style="font-size: 14px;">{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+    {% endblock%}
+</div>
+{% endblock %}

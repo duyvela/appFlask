@@ -1,0 +1,155 @@
+{% extends './body.html' %}
+
+{% block title %}
+Usuarios
+{% endblock %}
+
+
+
+
+{% block container %}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Usuario</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('MoneidAPP.dashboard') }}">Inicio</a></li>
+                <li class="breadcrumb-item">Usuarios</li>
+            </ol>
+        </nav>
+    </div><!--END PAGE TITLE--><br>
+   
+    <section class="section principal">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!--table-->
+                <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Usuarios</h5>
+        
+                      <!-- Default Tabs -->
+                      <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
+                        <li class="nav-item flex-fill" role="presentation">
+                            <a href="{{ url_for('MoneidAPP.Users')}}" class="nav-link w-100" id="btnUsers" type="button" role="tab" aria-selected="false" >Lista de Usuarios</a>
+                        </li>
+                        <li class="nav-item flex-fill" role="presentation">    
+                            <a href="{{ url_for('MoneidAPP.addUser')}}" class="nav-link w-100 active" id="btnAddUser" data-bs-toggle="tab" data-bs-target="#addUser" type="button" role="tab" aria-controls="profile" aria-selected="false">Nuevo Usuarios</a> 
+                        </li>
+                      </ul>
+                      <div class="tab-content pt-2" id="myTabjustifiedContent">
+                        <div class="tab-pane fade show active" id="addUsers" role="tabpanel" aria-labelledby="btnAddUser">
+                            <form class="form-signup" method="POST" action="{{ url_for('MoneidAPP.addUser')}}">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <div class="form-group text-center pt-3">
+                                    
+                                </div>
+                                    <div class="col-12 col-sm-6 py-2 wow fadeInLeft form-group">
+                                        <label for="username" class="label-form-control">Nombre del usuario</label>
+                                        <input type="text" name="username" id="username" class="form-control" placeholder="Nombre(s)" minlength="3" maxlength="20" required>
+                                    </div>
+                                    <div class="col-12 col-sm-6 py-2 wow fadeInLeft form-group">
+                                        <label for="apellidoPAtEmpleado" class="label-form-control">Apellido Paterno</label>
+                                        <input type="text" name="apellidoPAtEmpleado" id="apellidoPAtEmpleado" class="form-control" placeholder="Apellido Paterno" minlength="3" maxlength="25" required>
+                                    </div>
+                                    <div class="col-12 col-sm-6 py-2 wow fadeInLeft">
+                                        <label for="apellidoMatEmpleado">Apellido Materno</label>
+                                        <input type="text" name="apellidoMatEmpleado" id="apellidoMatEmpleado" class="form-control" placeholder="Apellido Materno" minlength="3" maxlength="25" required>
+                                    </div>
+                
+                                    <div class="col-12 col-sm-6 py-2 wow fadeInLeft form-group">
+                                        <label for="correoElectronico">Correo Electrónico</label>
+                                        <input type="email" name="correoElectronico" id="correoElectronico" class="form-control" placeholder="Ingrese el correo electrónico" minlength="6" maxlength="150" required>
+                                    </div>
+                                    
+                                    <div class="col-12 col-sm-6 py-2 wow fadeInLeft form-group">
+                                        <label for="password">Contraseña</label>
+                                        <input type="password" name="password" id="password" class="form-control" placeholder="Ingrese la contraseña" minlength="6" maxlength="255" required>
+                                    </div>
+                                    <!--
+                                    <div class="col-12 col-sm-6 py-2 wow fadeInLeft form-group">
+                                        <label for="passwordV">Validar contraseña</label>
+                                        <input type="password" name="passwordV" id="passwordV" class="form-control" placeholder="Ingrese de nuevo la contraseña" minlength="6" maxlength="255" required>
+                                    </div>
+                                    -->
+                                    <div class="col-12 col-sm-6 py-2 wow fadeInLeft form-group">
+                                        <label for="puesto">Puesto</label>
+                                        <input type="text" name="puesto" id="puesto" class="form-control" placeholder="Ingrese el puesto del empleado" required>
+                                    </div>
+                                    <div class="col-12 col-sm-6 py-2 wow fadeInLeft form-group">
+                                        <label for="idSucursalEmpleado">Elije la Sucursal a la que Pertenece</label>
+                                        <select name="idSucursalEmpleado" id="idSucursalEmpleado" class="custom-select">
+                                            {% for post1 in sucursal %}
+                                            <option value="{{ post1.id }}"> {{ post1.nombreSucursal }}, Dirección: {{ post1.direccion}}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-sm-6 py-2 wow fadeInLeft form-group">
+                                        <label for="tipoRol">Elije el Rol Asignado</label>
+                                        <select name="tipoRol" id="tipoRol" class="custom-select">
+                                            {% for post2 in ROl %}
+                                            <option value="{{ post2.idRol }}">{{ post2.tipoRol }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                
+                                
+                                <div class="form-group mx-sm-4 pb-2">
+                                    <button class="btn btn-primary mt-3 wow zoomIn" type="submit">CREAR USUARIO</button>
+                                </div>
+                            </form>
+                        </div>
+
+                      </div>
+                      
+                      <!-- End Default Tabs -->
+        
+                    </div>
+                  </div>
+                  <!--endtabs-->
+
+
+
+            </div>
+    </section>
+</main>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const btnUsers = document.getElementById("btnUsers");
+        const btnAddUser = document.getElementById("btnAddUser");
+
+        btnUsers.addEventListener("click", () => {
+            document.querySelector("#userLists").classList.add("show", "active");
+            document.querySelector("#addUser").classList.remove("show", "active");
+        });
+
+        btnAddUser.addEventListener("click", () => {
+            document.querySelector("#userLists").classList.remove("show", "active");
+            document.querySelector("#addUser").classList.add("show", "active");
+        });
+    });
+</script>
+
+
+
+
+{% endblock %}
+
+{% block customJS %}
+<script src="{{ url_for('static', filename='vendor/apexcharts/apexcharts.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/chart.js/chart.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/chart.js/chart.umd.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/echarts/echarts.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/quill/quill.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/simple-datatables/simple-datatables.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/tinymce/tinymce.min.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+{% endblock %}

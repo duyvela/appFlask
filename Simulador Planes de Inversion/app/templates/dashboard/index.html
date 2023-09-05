@@ -1,0 +1,178 @@
+{% extends './body.html' %}
+
+{% block title %}
+Index
+{% endblock %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/boxicons/css/boxicons.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/quill/quill.snow.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/quill/quill.bubble.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/remixicon/remixicon.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/simple-datatables/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/flipbook.css')}}">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
+
+{% endblock %}
+
+{% block container %}
+
+<main class="main" id="main">
+  <div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('MoneidAPP.index') }}">Home</a></li>
+        <li class="breadcrumb-item">Inicio</li>
+      </ol>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <br />
+      {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-info-circle me-1"></i>
+        <strong style='font-size: 14px;'>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+    </nav>
+  </div><!--END PAGE TITLE-->
+
+  <section class="section principal">
+    <div class="row">
+
+      <!-- left difr -->
+      <div class="col-lg-10">
+        <div class="row">
+
+          <!--cripto card -->
+          <div class="col-xxl-4 col-md-6 card-color">
+            <div class="card info-card cripto-card">
+              <div class="card-body card-bit">
+
+                <div class=" d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <img src="{{ url_for('static', filename='img/icon/i2.png') }}" height="44px" width="44px">
+                  </div>
+                </div>
+                <div>
+                  <h5 class="card-tittle"><a class="card-title" href="{{ url_for('MoneidAPP.CALplazoFijo') }}"
+                      target="_blank" style="text-decoration: none;">Calculadora Plazo Fijo</a></h5>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card eth-card">
+              <div class="card-body card-bit">
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <img src="{{ url_for('static', filename='img/icon/i1.png') }}" height="44px" width="44px">
+                  </div>
+                </div>
+                <div>
+                  <h3 class="card-tittle"><a class="card-title" href="{{ url_for('MoneidAPP.rendimientoPro') }}"
+                      target="_blank" style="text-decoration: none;">Rendimiento Programado</a></h3>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+
+          <div class="col-xxl-4 col-xl-12">
+            <div class="card info-card ltc-card">
+              <div class="card-body card-bit">
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <img src="{{ url_for('static', filename='img/icon/i3.png') }}" height="44px" width="44px">
+                  </div>
+                </div>
+                <div>
+                  <h5 class="card-tittle"><a class="card-title" href="{{ url_for('MoneidAPP.aportacion') }}"
+                      target="_blank" style="text-decoration: none;">Calculadora de Aportaciones</a></h5>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Brochure</h5>
+            <section class="book">
+              <div id="flipbook" class="flipbook">
+                <div class="hard"><img src="{{ url_for('static', filename='img/brochure/1.jpg')}}" class="img-book"></div>
+                <div class="hard"><img src="{{ url_for('static', filename='img/brochure/2.jpg')}}" class="img-book"></div>
+                <div class="pg"><img src="{{ url_for('static', filename='img/brochure/3.jpg')}}" class="img-book"></div>
+                <div class="pg"><img src="{{ url_for('static', filename='img/brochure/4.jpg')}}" class="img-book"></div>
+                <div class="pg"><img src="{{ url_for('static', filename='img/brochure/5.jpg')}}" class="img-book"></div>
+                <div class="pg"><img src="{{ url_for('static', filename='img/brochure/6.jpg')}}" class="img-book"></div>
+                <div class="pg"><img src="{{ url_for('static', filename='img/brochure/7.jpg')}}" class="img-book"></div>
+                <div class="pg"><img src="{{ url_for('static', filename='img/brochure/8.jpg')}}" class="img-book"></div>
+                <div class="pg"><img src="{{ url_for('static', filename='img/brochure/9.jpg')}}" class="img-book"></div>
+                <div class="pg"><img src="{{ url_for('static', filename='img/brochure/10.jpg')}}" class="img-book"></div>
+                <div class="pg"><img src="{{ url_for('static', filename='img/brochure/11.jpg')}}" class="img-book"></div>
+                <div class="pg"><img src="{{ url_for('static', filename='img/brochure/12.jpg')}}" class="img-book"></div>
+                <div class="pg"><img src="{{ url_for('static', filename='img/brochure/13.jpg')}}" class="img-book"></div>
+                <div class="pg"><img src="{{ url_for('static', filename='img/brochure/14.jpg')}}" class="img-book"></div>
+                <div class="hard"><img src="{{ url_for('static', filename='img/brochure/15.jpg')}}" class="img-book"></div>
+                <div class="hard"><img src="{{ url_for('static', filename='img/brochure/16.jpg')}}" class="img-book"></div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+
+{% endblock %}
+
+{% block customJS %}
+<script src="{{ url_for('static', filename='vendor/apexcharts/apexcharts.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/chart.js/chart.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/chart.js/chart.umd.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/echarts/echarts.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/quill/quill.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/simple-datatables/simple-datatables.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/tinymce/tinymce.min.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/funtions.js') }}"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script src="{{ url_for('static', filename='js/turn.js')}}"></script>
+
+{% endblock %}

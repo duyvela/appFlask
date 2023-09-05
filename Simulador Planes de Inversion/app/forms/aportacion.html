@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Simulador Planes de Inversion - MONEID</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- favicons -->
+  <link href="../assets/img/favicon.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- boostrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <!-- css file -->
+  <link href="../assets/css/style.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+  <!-- ########## HEADER ##############-->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-lg-between">
+      <a href="../index.html" class="logo d-flex aling-items-center">
+        <img src="../assets/img/logo/logo.png" alt="" class="img-fluid">
+        <span class="d-none d-lg-block">MONEID</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div>
+
+    <nav class="header-nav ms-auto">
+
+
+    </nav>
+    <!-- end navbar -->
+
+    <!---->
+  </header>
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="../index.html">
+          <i class="bi bi-grid"></i>
+          <span>INICIO</span>
+        </a>
+      </li><!-- End dashboard Nav-->
+
+      <li class="nav-item">
+        <a class="nav-link" href="../forms/plazoF.html"><span>PLAZO FIJO</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../forms/rendimientoP.html"><span>RENDIMIENTO PROGRAMADOS</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../forms/aportacion.html"><span>APORTACION</span></a>
+      </li>
+
+    </ul>
+  </aside>
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>APORTACIONES</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="../index.html">Inicio</a></li>
+          <li class="breadcrumb-item">Aportaciones</li>
+        </ol>
+      </nav>
+    </div><!--END PAGE TITLE-->
+
+    <section class="section principal">
+      <div class="row justify-content-center">
+        <div class="col-lg-12">
+
+          <!--table-->
+
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-center">Aportacion</h5>
+              <div class="row g-4 justify-content-center">
+
+                <div class="col-md-1">
+                  <label class="col-form-label" for="montoInicial">Monto Inicial:</label>
+                  <input class="form-control" type="number" id="montoInicial"/>
+                </div>
+                <div class="col-md-1">
+                  <label class="col-form-label" for="aporte">Aportación:</label>
+                  <input class="form-control" type="number" id="aporte"/>
+                </div>
+                <div class="col-md-2">
+                  <label for="validacionPlazo" class="col-form-label">Plazos Fijos:</label>
+                  <select class="form-select" id="validacionPlazo" required>
+                    <option selected disabled value="">Elegir...</option>
+                    <option value="12 meses">12 Meses</option>
+                    <option value="24 meses">24 Meses</option>
+                    <option value="36 meses">36 Meses</option>
+                  </select>
+                </div>
+                <div class="col-md-1">
+                  <label class="col-form-label" for="interesAnual">Interes</label>
+                  <input class="form-control" type="number" id="interesAnual" minlength="2" />
+                </div>
+                <div class="col-md-3">
+                  <label class="col-form-label" for="fechaInicioContrato">Fecha de inicio del contrato:</label>
+                  <input class="form-control" type="date" id="fechaInicioContrato" />
+                </div>
+                <div class="col-md-3">
+                  <label class="col-form-label" for="fechaAportacion">Fecha de Aportación:</label>
+                  <input type="date" class="form-control" id="fechaAportacion" />
+                </div>
+                <div class="col-md-3">
+                  <label class="col-forml-label" for="clientName">Cliente:</label>
+                  <input class="form-control" type="text" id="clientName"/>
+                </div>
+                <div class="col-sm-2">
+                  <button id="imprimir" class="btn bg-success" onclick="generatePDF()">Imprimir</button>
+                </div>
+                <div class="col-sm-2 text-center">
+                  <button id="calculateButton" class="custom-button" onclick="calcularAporte()">Calcular</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row justify-content-center">
+              <div class="col-md-11">
+                <table class="table table-bordered" id="table">
+                  <tr class="rendimientoProw1">
+                    <th colspan="7" style="text-align: center;">Aportaciones a Capital Inversión Anual</th>
+                  </tr>
+                  <tr class="rendimientoProw2">
+                    <th>Modelos de Inversión</th>
+                    <th>Fecha de inicio</th>
+                    <th>Plazo</th>
+                    <th>Tasa %</th>
+                    <th>Capital Total Invertido</th>
+                    <th>Rendimiento Ganado</th>
+                    <th>Saldo Total</th>
+                  </tr>
+                  <tr>
+                    <td>Inversión Inicial</td>
+                    <td id="fechaInicioContratoResult">-</td>
+                    <td id="plazoSelecionado">-</td>
+                    <td id="interesPlazo">-</td>
+                    <td id="montoInicialResult">-</td>
+                    <td id="RendimientoGanadoPResult">-</td>
+                    <td id="totalRendimientoPlazoResult">-</td>
+                  </tr>
+                  <tr>
+                    <td>Aportación</td>
+                    <td id="fechaAportacionResult">-</td>
+                    <td id="diaDepositoResult">-</td>
+                    <td id="interesnetoResult">-</td>
+                    <td id="aporteResult">-</td>
+                    <td id="interesGanadoResult">-</td>
+                    <td id="totalAportacionResult">-</td>
+                  </tr>
+                  <tr>
+                    <td colspan="4">Monto Total Invertido:</td>
+                    <td id="capitaltotalResult">-</td>
+                    <td id="rendimientototalResult">-</td>
+                    <td id="saldototalResult">-</td>
+                  </tr>
+                  
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- boostrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <!--PDF-->
+  <script src="../assets/node_modules/jspdf/dist/jspdf.umd.min.js"></script>
+  <script src="../assets/node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.min.js"></script>
+
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/aportacion.js"></script>
+
+</body>
+
+
+</html>

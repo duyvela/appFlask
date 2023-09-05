@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>{% block title %}{% endblock %}| MONEID mx</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo/favicon.png') }}">
+
+    {% block custonCSS %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/boxicons/css/boxicons.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/quill/quill.snow.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/quill/quill.bubble.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/remixicon/remixicon.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/simple-datatables/style.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
+ 
+    {% endblock %}
+</head>
+  
+  {% block body %}
+  <body>
+    
+  </body>
+
+  {% endblock %}
+
+
+  {% block customJS %}
+  <script src="{{ url_for('static', filename='vendor/apexcharts/apexcharts.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/chart.js/charts.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/chart.js/charts.umd.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/echarts/echarts.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/quill/quill.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/simple_datetables/simple-datatables.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/tinymce/tinymce.min.js') }}"></script>
+
+  <script type="module" src="{{ url_for('static', filename='js/node_modules/pdf-lib/dist/pdf-lib.min.js') }}"></script>
+
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% endblock %}
+
+  </html>

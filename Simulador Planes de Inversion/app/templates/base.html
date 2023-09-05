@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>{% block title %}{% endblock %}| MONEID mx</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo/favicon.png') }}">
+
+    {% block custonCSS %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/boxicons/css/boxicons.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/quill/quill.snow.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/quill/quill.bubble.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/remixicon/remixicon.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/simple-datatables/style.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
+ 
+    {% endblock %}
+</head>
+<body> 
+<header id="header" class="header fixed-top d-flex align-items-center">
+
+  <div class="d-flex align-items-center justify-content-between">
+    <a href="{{ url_for('MoneidAPP.dashboard') }}" class="logo d-flex aling-items-center" target="_blank">
+      <img src="{{ url_for('static', filename='img/logo/logo.png') }}" alt="" class="img-fluid">
+      <span class="d-none d-lg-block">MONEID</span>
+    </a>
+    <i class="bi bi-list toggle-sidebar-btn"></i>
+  </div>
+  
+  <nav class="header-nav ms-auto">
+    
+    <ul class="d-flex align-items-center">
+
+
+      <li class="nav-item dropdown pe-3">
+        <a href="" class="nav-link nav-profile d-flex align-items-center pe-0" data-bs-toggle="dropdown">
+          <span class="d-none d-md-block dropdown-toggle ps-2">{{current_user.username}}</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+          <li class="dropdown-header">
+            <h6>{{current_user.username}}</h6>
+            {% if current_user.idRolEmpleado == 1 %}
+            <span>Administrador</span>
+            {% elif current_user.idRolEmpleado == 2 %}
+            <span>Colaborador</span>
+            {% else %}
+            <span>Error</span>
+            {% endif %}
+          </li>
+          <li>
+            <hr class="dropdpwn-divider">
+          </li>
+          <li>
+            <a href="{{ url_for('MoneidAPP.perfil')}}" class="dropdown-item d-flex align-items-center">
+              <i class="bi bi-person"></i>
+              <span>Mi perfil</span>
+            </a>
+          </li>
+          <li><hr class="dropdown-divider"></li>
+          <li>
+            <a href="{{ url_for('auth.logout') }}" class="dropdown-item d-flex align-items-center">
+              <i class="bi bi-box-arrow-right"></i>
+              <span>Cerrar Sesion</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+</header>
+
+<aside id="sidebar" class="sidebar">
+
+  {% if current_user.idRolEmpleado == 1 %}
+  <span class="navbar-tesx">
+    <strong>{{ current_user.username }}</strong> (Administrador)
+  </span>
+
+  <ul class="sidebar-nav" id="sidebar-nav">
+    
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ url_for('MoneidAPP.dashboard')}}">
+        <i class="bi bi-grid"></i>
+        <span>INICIO</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse">
+        <i class="bi bi-calculator-fill"></i><span>CALCULADORAS</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul class="nav-content collapse " id="components-nav" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{{ url_for('MoneidAPP.CALplazoFijo') }}" style="text-decoration: none;">
+            <i class="bi bi-graph-up"></i>
+            <span>PLAZO FIJO</span></a>
+        </li>
+        <li>
+          <a href="{{ url_for('MoneidAPP.rendimientoPro') }}" style="text-decoration: none;">
+            <i class="bi bi-clipboard2-data"></i>
+            <span>RENDIMIENTO PROGRAMADOS</span></a>
+        </li>
+        <li>
+          <a href="{{ url_for('MoneidAPP.aportacion')}}" style="text-decoration: none;">
+            <i class="bi bi-cash-coin"></i>
+            <span>APORTACION</span></a>
+        </li>
+        <li>
+          <a href="{{ url_for('MoneidAPP.allRegistros')}}" style="text-decoration: none;">
+            <i class="bi bi-journal-text"></i>
+            <span>REGISTROS</span>
+          </a>
+        </li>
+
+      </ul>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ url_for('MoneidAPP.Users')}}">
+        <i class="bi bi-person"></i>
+        <span>USUARIOS</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="http://script.google.com/macros/s/AKfycbyUhR3vWoG3Vn39uMnc0_J2-CqPabv-BGQoRMUQOfDu4xiKIHllZNVuxnX3wyxJkUBo/exec" target="_blank">
+        <i class="bi bi-ui-checks"></i>
+        <span>Formulario de Contrato Moneid</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="http://moneid2.sharepoint.com/sites/moneidgeneral2" target="_blank">
+        <i class="bi bi-microsoft"></i>
+        <span>SharePoint MONEID</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ url_for('auth.logout') }}">
+      <i class="bi bi-box-arrow-right"></i>
+      <span>Cerrar Sesion</span></a>
+    </li>
+  </ul>
+
+  <!--COLABORADOR-->
+  {% elif current_user.idRolEmpleado == 2 %}
+  <span class="navbar-text"><strong>{{current_user.username}}</strong>(Colaborador)</span>
+  <ul class="sidebar-nav" id="sidebar-nav">
+    
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ url_for('MoneidAPP.dashboard')}}">
+        <i class="bi bi-grid"></i>
+        <span>INICIO</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse">
+        <i class="bi bi-calculator-fill"></i><span>CALCULADORAS</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul class="nav-content collapse " id="components-nav" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{{ url_for('MoneidAPP.CALplazoFijo') }}" style="text-decoration: none;">
+            <i class="bi bi-graph-up"></i>
+            <span>PLAZO FIJO</span></a>
+        </li>
+        <li>
+          <a href="{{ url_for('MoneidAPP.rendimientoPro') }}" style="text-decoration: none;">
+            <i class="bi bi-clipboard2-data"></i>
+            <span>RENDIMIENTO PROGRAMADOS</span></a>
+        </li>
+        <li>
+          <a href="{{ url_for('MoneidAPP.aportacion')}}" style="text-decoration: none;">
+            <i class="bi bi-cash-coin"></i>
+            <span>APORTACION</span></a>
+        </li>
+        <li>
+          <a href="{{ url_for('MoneidAPP.allRegistros')}}" style="text-decoration: none;">
+            <i class="bi bi-journal-text"></i>
+            <span>REGISTROS</span>
+          </a>
+        </li>
+
+      </ul>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="http://script.google.com/macros/s/AKfycbyUhR3vWoG3Vn39uMnc0_J2-CqPabv-BGQoRMUQOfDu4xiKIHllZNVuxnX3wyxJkUBo/exec" target="_blank">
+        <i class="bi bi-ui-checks"></i>
+        <span>Formulario de Contrato Moneid</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="http://moneid2.sharepoint.com/sites/moneidgeneral2" target="_blank">
+        <i class="bi bi-microsoft"></i>
+        <span>SharePoint MONEID</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ url_for('auth.logout') }}">
+      <i class="bi bi-box-arrow-right"></i>
+      <span>Cerrar Session</span></a>
+    </li>
+  </ul>
+
+  {% endif %}
+</aside>
+
+    {% block body %} 
+     
+    {% endblock %}
+  </body>
+
+
+
+
+  {% block customJS %}
+  <script src="{{ url_for('static', filename='vendor/apexcharts/apexcharts.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/chart.js/chart.umd.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/echarts/echarts.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/quill/quill.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='simple-datatables/simple-datatables.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/tinymce/tinymce.min.js') }}"></script>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% endblock %}
+
+  </html>

@@ -1,0 +1,138 @@
+{% extends './body.html' %}
+
+{% block title %}
+Plazo Fijo
+{% endblock %}
+
+
+{% block container %}
+
+
+<main id="main" class="main">
+    <div class="pagetitle">
+      <h1>PLAZO FIJO</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('MoneidAPP.index') }}">Inicio</a></li>
+          <li class="breadcrumb-item">Plazo Fijo</li>
+        </ol>
+      </nav>
+    </div><!--END PAGE TITLE--><br><br><br>
+
+    <section class="section principal">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+
+          <!--table-->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-center">Plazo Fijo</h5>
+
+              <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
+                <li class="nav-item flex-fill" role="presentation">
+                  <a href="{{ url_for('MoneidAPP.CALplazoFijo') }}" class="nav-link w-100 active" id="btnCALpf" data-bs-toggle="tab" data-bs-targer="#CALpf" type="button" role="tab" aria-controls="home" aria-selected="true">Calcular Plazo Fijo</a>
+                </li>
+                <li class="nav-item flex-fill" role="presentation">
+                  <a href="{{ url_for('MoneidAPP.registrosPF') }}" class="nav-link w-100" id="btnResgitroPF" type="button" role="tab" aria-selected="false">Registros</a>
+                </li>
+              </ul>
+              <div class="tab-content pt-2" id="myTabjustifiedContent">
+                <div class="tab-pane fade show active" id="CALpf" role="tabpanel" aria-labelledby="btnCALpf"></div>
+              </div>
+              <!--                  formulario            -->
+              <form method="post" action="{{ url_for('MoneidAPP.CALplazoFijo') }}" id="plazoFijoForm">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <div class="row g-3 justify-content-center">
+                
+                <div class="col-md-2">
+                  <label class="col-form-label" for="investmentInput">Monto Inicial:</label>
+                  <input class="form-control" type="number" id="investmentInput" name="montoinicial"/>
+                </div>
+                <div class="col-md-2">
+                  <label for="nombreCliente" class="col-form-label">Nombre Cliente:</label>
+                  <input type="text" class="form-control" id="clientName" name="clientName"/>
+                </div>
+                <div class="col-md-2">
+                  <label for="telefonoCliente" class="col-form-label">Telefono:</label>
+                  <input type="text" class="form-control" id="telefono" name="telefono"/>
+                </div>
+                <div class="col-sm-2">
+                  <div class="col">
+                    <input type="checkbox" id="6meses" name="6meses" value="6meses">
+                    <label for="6meses">6 Meses</label>
+                  </div>
+                  <div class="col">
+                    <input type="checkbox" id="12meses" name="12meses" value="12meses">
+                    <label for="6meses">12 Meses</label>
+                  </div>
+                  <div class="col">
+                    <input type="checkbox" id="24meses" name="24meses" value="24meses">
+                    <label for="6meses">24 Meses</label>
+                  </div>
+                  <div class="col">
+                    <input type="checkbox" id="36meses" name="36meses" value="36meses">
+                    <label for="6meses">36 Meses</label>
+                  </div>
+                </div>
+                <div class="col-md-2 text-center">
+                  <button id="calculateButton" class="custom-button" onclick="showConfirmation()">Calcular</button>
+                  
+                  <input type="hidden" id="submit_type" name="submit_type" value="calculate_and_register">
+                </div>
+                <script>
+                  function showConfirmation(event) {
+                    if (!confirm('Deseas registrar el cálculo en la base de datos?')) {
+                        document.getElementById('submit_type').value = ''; // Cambia el valor a vacío si se cancela
+                    }
+                }
+                </script>
+              </div>
+            </div>
+          </form>
+
+          {% if resul %}
+          <div class="row justify-content-center">
+            <div class="col-md-11">
+              <table class="table table-bordered">
+                <tr class="rendimientoProw1">
+                  <th colspan="{{ selected_plazos|length + 1 }}" style="text-align: center;">Plazo Fijo</th>
+                </tr>
+                <tr class="rendimientoProw2">
+                  <th>Inversión: {{ resul['montoinicial'] }}</th>
+                  {% for plazo in selected_plazos %}
+                  <th>{{ plazo }}</th>
+                  {% endfor %}
+                </tr>
+                <tr>
+                  <td>Rendimientos Obtenidos</td>
+                  {% for plazo in selected_plazos %}
+                  <td>{{ resul['rendimiento'][plazo] }}</td>
+                  {% endfor %}
+                </tr>
+                <tr>
+                  <td>Monto total:</td>
+                  {% for plazo in selected_plazos %}
+                  <td>{{ resul['totalRendimiento'][plazo] }}</td>
+                  {% endfor %}
+                </tr>
+                <tr>
+                  <td>Otras Instituciones:</td>
+                  {% for plazo in selected_plazos %}
+                  <td>{{ resul['OInsti'][plazo] }}</td>
+                  {% endfor %}
+                </tr>
+              </table>
+            </div>
+          </div>
+          <img src="data:image/png;base64, {{grafica_base64}}" alt="Grafica Plazo Fijo" width="1100px" height="650px">
+          {% endif %}
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+{% endblock %}
+
