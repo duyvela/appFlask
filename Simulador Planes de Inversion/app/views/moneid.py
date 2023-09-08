@@ -16,7 +16,10 @@ import matplotlib.ticker as ticker
 import numpy as np
 from PIL import Image
 from docx2pdf import convert
-import pythoncom
+import subprocess
+import docx2txt
+import pdfkit
+
 
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
@@ -547,26 +550,22 @@ def pdfPlazoFijo(idPlazoFijo):
  
     nameFile = f'PlazoFijo_{plazoPDF.nombreCliente}.docx'
 
-    docx_path = os.path.join(moneidAPP.root_path, 'pdfs', nameFile)
-    pdf_path = os.path.join(moneidAPP.root_path, 'pdfs', f'PlazoFijo_{plazoPDF.nombreCliente}.pdf')
+    pdf_bytes_io = BytesIO()
+    template.save(pdf_bytes_io)
+    pdf_bytes = pdf_bytes_io.getvalue()
 
-    template.save(docx_path)
+    if pdf_bytes:
+        # Update the 'pdfPF' column in the 'PlazoFijo' table with the PDF data
+        plazoPDF.pdfPF = pdf_bytes
+        db.session.commit()
 
-    if os.path.exists(docx_path):
-        try:
-            pythoncom.CoInitialize()
-    
-            convert(docx_path, pdf_path)
-        except pythoncom.com_error as e:
-            print("COM Error:", e)
-        
-        finally:
-            pythoncom.CoInitialize()
-
-        return send_file(pdf_path, as_attachment=True)
-
+        # Serve the PDF to the user for download
+        response = send_file(BytesIO(pdf_bytes), as_attachment=True, download_name=nameFile)
+        response.headers["Content-Type"] = "application/pdf"
+        return response
     else:
         return "Error"
+
 
 @moneidAPP.route("/MoneidAPP/Rendimiento-Programado", methods=['POST', 'GET'])
 @login_required
@@ -709,21 +708,19 @@ def pdfRenPro(idRendimientoP):
 
     nameFile = f'PlazoFijo_{RenPropdf.nombreCliente}.docx'
 
-    docx_path = os.path.join(moneidAPP.root_path, 'pdfs', nameFile)
-    pdf_path = os.path.join(moneidAPP.root_path, 'pdfs', f'RendimientoProgrmadoMensual_{RenPropdf.nombreCliente}.pdf')
+    pdf_bytes_io = BytesIO()
+    template.save(pdf_bytes_io)
+    pdf_bytes = pdf_bytes_io.getvalue()
 
-    template.save(docx_path)
+    if pdf_bytes:
+        # Update the 'pdfPF' column in the 'PlazoFijo' table with the PDF data
+        RenPropdf.pdfRP = pdf_bytes
+        db.session.commit()
 
-    if os.path.exists(docx_path):
-        try:
-            pythoncom.CoInitialize()
-            convert(docx_path, pdf_path)
-        except pythoncom.com_error as e:
-            print("COM Error", e)
-        finally:
-            pythoncom.CoInitialize()
-        return send_file(pdf_path, as_attachment=True)
-
+        # Serve the PDF to the user for download
+        response = send_file(BytesIO(pdf_bytes), as_attachment=True, download_name=nameFile)
+        response.headers["Content-Type"] = "application/pdf"
+        return response
     else:
         return "Error"
     
@@ -1046,23 +1043,19 @@ def pdfAPOR(idAportacion):
 
     nameFile = f'PlazoFijo_{aporta.nombreCliente}.docx'
 
-    docx_path = os.path.join(moneidAPP.root_path, 'pdfs', nameFile)
-    pdf_path = os.path.join(moneidAPP.root_path, 'pdfs', f'Aportacion{aporta.nombreCliente}.pdf')
+    pdf_bytes_io = BytesIO()
+    template.save(pdf_bytes_io)
+    pdf_bytes = pdf_bytes_io.getvalue()
 
-    template.save(docx_path)
+    if pdf_bytes:
+        # Update the 'pdfPF' column in the 'PlazoFijo' table with the PDF data
+        aporta.pdfAPOR = pdf_bytes
+        db.session.commit()
 
-    if os.path.exists(docx_path):
-        try:
-            pythoncom.CoInitialize()
-            convert(docx_path, pdf_path)
-        except pythoncom.com_error as e:
-            print("COM Error", e)
-        
-        finally:
-            pythoncom.CoInitialize()
-
-        return send_file(pdf_path, as_attachment=True)
-
+        # Serve the PDF to the user for download
+        response = send_file(BytesIO(pdf_bytes), as_attachment=True, download_name=nameFile)
+        response.headers["Content-Type"] = "application/pdf"
+        return response
     else:
         return "Error"
 

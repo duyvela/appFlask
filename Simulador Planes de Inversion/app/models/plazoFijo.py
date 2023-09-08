@@ -24,6 +24,7 @@ class PlazoFijo(db.Model):
     OInsti36 = db.Column(db.String(45))
 
     graficas = db.Column(db.LargeBinary)
+    pdfPF = db.Column(db.LargeBinary)
 
     empleado = db.relationship('Empleado', foreign_keys=[idEmpleado])
 

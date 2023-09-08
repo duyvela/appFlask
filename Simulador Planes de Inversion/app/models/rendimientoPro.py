@@ -20,6 +20,8 @@ class RendimientoPro(db.Model):
     fechaRegistro = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
     graficasRP = db.Column(db.LargeBinary)
+    pdfRP = db.Column(db.LargeBinary)
+
 
     empleado = db.Relationship('Empleado', foreign_keys=[idEmpleado])
 

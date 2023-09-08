@@ -31,6 +31,9 @@ class Aportacion(db.Model):
     OIaportacionTotal = db.Column(db.String(45), nullable=False)
     OIsaldototal = db.Column(db.String(45), nullable=False)
 
+    pdfAPOR = db.Column(db.LargeBinary)
+
+
     empleado = db.relationship('Empleado', foreign_keys=[idEmpleado])
 
     def __repr__(self):
